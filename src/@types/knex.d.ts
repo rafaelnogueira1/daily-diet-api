@@ -11,5 +11,17 @@ declare module 'knex/types/tables' {
       active: boolean;
       created_at: string;
     };
+
+    meals: {
+      id: string;
+      user_id: string;
+      name: string;
+      description: string;
+      date: string;
+      time: string;
+      is_diet: boolean;
+      created_at: string;
+      updated_at: string;
+    };
   }
 }
