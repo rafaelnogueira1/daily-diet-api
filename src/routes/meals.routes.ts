@@ -101,4 +101,42 @@ export async function mealsRoutes(app: FastifyInstance) {
 
     reply.code(204).send();
   });
+
+  app.get(
+    '/metrics',
+    { preHandler: [checkAuthorization] },
+    async (request, reply) => {
+      const userId = request.cookies[cookies.accessToken];
+
+      const meals = await knex('meals').where({ user_id: userId });
+
+      const { bestSequence, onDiet, offDiet } = meals.reduce(
+        (acc, meal) => {
+          if (meal.is_diet) {
+            acc.onDiet++;
+          } else {
+            acc.offDiet++;
+          }
+
+          if (acc.bestSequence < acc.onDiet) {
+            acc.bestSequence = acc.onDiet;
+          }
+
+          return acc;
+        },
+        {
+          onDiet: 0,
+          offDiet: 0,
+          bestSequence: 0,
+        }
+      );
+
+      reply.code(200).send({
+        total: meals.length,
+        onDiet,
+        offDiet,
+        bestSequence,
+      });
+    }
+  );
 }
