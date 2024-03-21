@@ -8,5 +8,3 @@ build
 .env.test
 .env.development
 .env.production
-
-TODO.md

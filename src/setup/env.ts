@@ -12,6 +12,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3333),
   DATABASE_URL: z.string(),
   DATABASE_MIGRATIONS: z.string(),
+  DATABASE_CLIENT: z.enum(['sqlite', 'pg']).default('sqlite'),
 });
 
 const _env = envSchema.safeParse(process.env);
