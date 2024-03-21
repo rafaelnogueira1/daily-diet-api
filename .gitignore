@@ -1,0 +1,12 @@
+node_modules
+database
+build
+
+## Env files
+.env
+.env.local
+.env.test
+.env.development
+.env.production
+
+TODO.md
